@@ -19,20 +19,13 @@ Vue.component('product', {
           >On Sale!</p>
           <p v-if="inStock">In Stock</p>
           <p v-else>Out of Stock!</p>
-          <p>Product details:</p>
-              <ul>
-              <li v-for="detail in details">{{ detail }}</li>
-          </ul>
-          <p>Colours available: </p>
-          <div v-for="(variant, index) in variants"
-               class="color-box"
-               :class="{ variantOutOfStock: isOutOfStock(index) }"
-               :key="variant.id"
-               :style="{backgroundColor: variant.color}"
-               @click="updateImage(index)"
-          >
-          </div>
-
+          <productDetails 
+            :details="details" 
+            :variants="variants"
+            :updateImage="updateImage"
+          ></productDetails>
+      </div>
+      <div class="button-div">
           <!-- @event is shorthand for v-on:event -->
           <button @click="addToCart"
                   :disabled="!inStock"
@@ -43,7 +36,7 @@ Vue.component('product', {
               <p>Cart ({{cart}})</p>
           </div>
           <p>Shipping: {{ shipping }} </p>
-
+        </div>
       </div>
   </div>
 `,
@@ -86,9 +79,6 @@ Vue.component('product', {
     },
     updateImage(index) {
       this.selectedVariant = index;
-    },
-    isOutOfStock(index) {
-      return this.variants[index].quantity === 0;
     }
   },
   computed: {
