@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="nav-bar"></div>
+        <div id="app">
+            <h1>Vue.js Training App</h1>
+            <p>{{ greeting }}</p>
+            <div class="product">
+                <div class="product-image">
+                    <!-- :property is shorthand for v-bind:property -->
+                    <img :src="image" :alt="alt"/>
+                </div>
+                <div class="product-info">
+                    <h2>{{ product }}</h2>
+                    <a :href="link">What are socks?</a>
+                    <p v-show="onSale"
+                       :style="styles.emphasis"
+                    >On Sale!</p>
+                    <p v-if="inStock">In Stock</p>
+                    <p v-else>Out of Stock!</p>
+                    <p>Product details:</p>
+                        <ul>
+                        <li v-for="detail in details">{{ detail }}</li>
+                    </ul>
+                    <p>Colours available: </p>
+                    <div v-for="(variant, index) in variants"
+                         class="color-box"
+                         :class="{ variantOutOfStock: isOutOfStock(index) }"
+                         :key="variant.id"
+                         :style="{backgroundColor: variant.color}"
+                         @click="updateImage(index)"
+                    >
+                    </div>
+
+                    <!-- @event is shorthand for v-on:event -->
+                    <button @click="addToCart"
+                            :disabled="!inStock"
+                            :class="{ disabledButton: !inStock }"
+                    >Add to Cart</button>
+                    <button @click="removeFromCart">Remove from Cart</button>
+                    <div class="cart">
+                        <p>Cart ({{cart}})</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</html>
